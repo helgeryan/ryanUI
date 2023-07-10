@@ -7,7 +7,7 @@ s.license          = { :type => 'MIT', :file => 'LICENSE' }
 s.author           = { 'username' => 'ryanhelgeson14@gmail.com' }
 s.source           = { :git => 'git@github.com:helgeryan/ryanUI.git', :tag => s.version.to_s }
 s.ios.deployment_target = '10.0'
-s.source_files = 'Source/*'
+s.source_files = 'Source/RyanUI/Sources/**/*'
 s.frameworks = 'UIKit'
 s.module_name = 'RyanUI'
 end
