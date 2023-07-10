@@ -186,7 +186,7 @@ public class SpinnerButton: UIView {
             self.layoutIfNeeded()
         })
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 5.0, execute: {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
             self.setState(.normal)
         })
     }

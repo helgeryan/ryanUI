@@ -44,7 +44,7 @@ class SpinnerButtonViewController: UIViewController {
 
 extension SpinnerButtonViewController: SpinnerButtonDelegate {
     func spinnerButtonPressed() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 5.0, execute: {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
             self.button.setState(.complete)
         })
     }
