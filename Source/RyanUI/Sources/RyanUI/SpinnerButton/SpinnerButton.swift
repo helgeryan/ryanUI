@@ -8,15 +8,19 @@
 import Foundation
 import UIKit
 
+// MARK: - Spinner Button Delegate
 public protocol SpinnerButtonDelegate {
     func spinnerButtonPressed()
 }
 
+// MARK: - Spinner Button
 public class SpinnerButton: UIView {
+    // MARK: - Properties
     public var delegate: SpinnerButtonDelegate?
-    
     var buttonBackgroundColor: UIColor = .white
     var buttonTitle: String = ""
+    
+    // MARK: - UI Elementes
     var button: UIButton = {
         let button = UIButton()
         button.backgroundColor = .clear
@@ -41,11 +45,12 @@ public class SpinnerButton: UIView {
         return activity
     }()
     
+    // MARK: - Constraints
     var leadingConstraint: NSLayoutConstraint?
     var trailingConstraint: NSLayoutConstraint?
     var leadingProcessingConstraint: NSLayoutConstraint?
     
-     
+    // MARK: - Initializers
     public override init(frame: CGRect) {
         super.init(frame: frame)
         self.setupView()
@@ -55,6 +60,7 @@ public class SpinnerButton: UIView {
         super.init(frame: .zero)
     }
     
+    // MARK: - Setup Functions
     func setupView() {
         setupButton()
         setupImageView()
@@ -102,6 +108,7 @@ public class SpinnerButton: UIView {
         ])
     }
     
+    // MARK: - Public Setter Functions
     public func setBackgroundColor(_ color: UIColor) {
         buttonBackgroundColor = color
         button.backgroundColor = color
@@ -118,12 +125,6 @@ public class SpinnerButton: UIView {
     public func setTitle(_ title: String) {
         buttonTitle = title
         button.setTitle(title, for: .normal)
-    }
-    
-    @objc func doSpinnerButton(_ sender: Any) {
-        print("Button pressed")
-        delegate?.spinnerButtonPressed()
-        setState(.processing)
     }
     
     public func setState(_ state: SpinnerState) {
@@ -143,6 +144,14 @@ public class SpinnerButton: UIView {
         }
     }
     
+    // MARK: - Action Functions
+    @objc func doSpinnerButton(_ sender: Any) {
+        print("Button pressed")
+        delegate?.spinnerButtonPressed()
+        setState(.processing)
+    }
+    
+    // MARK: - Binding Functions
     func bindNormalState() {
         button.isEnabled = true
         button.setTitle(buttonTitle, for: .normal)
@@ -186,12 +195,14 @@ public class SpinnerButton: UIView {
             self.layoutIfNeeded()
         })
         
+        // After one second set back to the normal state
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
             self.setState(.normal)
         })
     }
 }
 
+// MARK: - Spinner States
 public enum SpinnerState {
     case disabled
     case normal
