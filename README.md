@@ -14,14 +14,14 @@ These are instructions on how to clone the repository locally.
 
 1. Gain access to the private repository found here: https://github.com/helgeryan/ryanUI
 2. Clone the repository using SSH.
-    a. Follow the steps to create an SSH key: https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent
-    b. Follow steps here to add your SSH key to you Github Account: https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account
-    c. Go to the RyanUI Github site in step 1
-    d. Press the green code dropdown button
-    e. Select SSH
-    f. Copy the url (should look like this: `git@github.com:helgeryan/ryanUI.git`)
-    g. Open terminal in a folder directory of your choosing
-    h. Run `git clone url-from-step-2f`
+    - Follow the steps to create an SSH key: https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent
+    - Follow steps here to add your SSH key to you Github Account: https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account
+    - Go to the RyanUI Github site in step 1
+    - Press the green code dropdown button
+    - Select SSH
+    - Copy the url (should look like this: `git@github.com:helgeryan/ryanUI.git`)
+    - Open terminal in a folder directory of your choosing
+    - Run `git clone git@github.com:helgeryan/ryanUI.git`
     
     NOTE: If error reach out to Ryan Helgeson
     
@@ -39,10 +39,10 @@ Instructions to run the application
 How to distribute Cocoapod. 
 
 1. Create a new commit 
-    a. Update the podspec to a newer pod version
-    b. Tag the commit using `git tag`
-    c. Push the commit `git push`
-    d. Push tags `git push --tags`
+    - Update the podspec to a newer pod version
+    - Tag the commit using `git tag`
+    - Push the commit `git push`
+    - Push tags `git push --tags`
     
 2. Push the RyanUI Cocoapod repository by: `pod repo push RyanUI RyanUI.podspec --allow-warnings`
 
