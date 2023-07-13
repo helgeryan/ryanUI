@@ -48,3 +48,9 @@ How to distribute Cocoapod.
 
 NOTE: Add `--verbose` to get more logging reported.
 
+## Using Distributed Cocoapod in other apps
+
+Add the following line to your podfile:
+
+`pod 'RyanUI', :git => 'git@github.com:helgeryan/ryanUI.git', :tag => '0.0.5'`
+
