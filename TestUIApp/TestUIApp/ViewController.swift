@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import RyanUI
 
 class ViewController: UIViewController {
     let model = HomeViewModel()
@@ -32,6 +33,14 @@ extension ViewController: UITableViewDelegate {
             switch item.action {
             case .spinnerButton:
                 let vc = SpinnerButtonViewController()
+                present(vc, animated: true)
+                break
+            case .creditCardScanner:
+                let vc = CreditCardScanner( resultsHandler: { number, date, cvv in 
+                    debugPrint("Number: \(number ?? "No number")")
+                    debugPrint("Date: \(date ?? "No date")")
+                    debugPrint("CVV: \(cvv ?? "No cvv")")
+                })
                 present(vc, animated: true)
             }
         }
