@@ -36,11 +36,7 @@ extension ViewController: UITableViewDelegate {
                 present(vc, animated: true)
                 break
             case .creditCardScanner:
-                let vc = CreditCardScanner(resultsHandler: { number, date, cvv in
-                    debugPrint("Number: \(number ?? "No number")")
-                    debugPrint("Date: \(date ?? "No date")")
-                    debugPrint("CVV: \(cvv ?? "No cvv")")
-                })
+                let vc = CreditCardScanner(delegate: model)
                 present(vc, animated: true)
             }
         }
@@ -62,4 +58,5 @@ extension ViewController: UITableViewDataSource {
         return model.actions.count
     }
 }
+
 
