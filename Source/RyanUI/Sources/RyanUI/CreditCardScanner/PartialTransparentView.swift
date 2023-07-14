@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  PartialTransparentView.swift
 //  
 //
 //  Created by Ryan Helgeson on 7/13/23.

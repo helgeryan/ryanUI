@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CreditCardScanner" customModule="RyanUI">
+            <connections>
+                <outlet property="closeButton" destination="aWG-0f-OYt" id="YYd-sM-lfZ"/>
+                <outlet property="creditCardNumberLabel" destination="2y7-B1-DoR" id="3hs-AC-4GW"/>
+                <outlet property="cvvLabel" destination="o6S-me-vVw" id="aQl-bQ-X9J"/>
+                <outlet property="dateLabel" destination="Qb2-4p-xui" id="lmj-FH-qEF"/>
+                <outlet property="hintBottomLabel" destination="rog-v8-u05" id="B7I-z9-uqp"/>
+                <outlet property="hintTopLabel" destination="0si-mv-946" id="BG9-eg-EFN"/>
+                <outlet property="submitButton" destination="zyz-3l-WX3" id="kLD-P4-TUS"/>
+                <outlet property="view" destination="iN0-l3-epB" id="TCm-H7-uLD"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zyz-3l-WX3">
+                    <rect key="frame" x="30" y="733" width="333" height="45"/>
+                    <color key="backgroundColor" systemColor="systemRedColor"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="45" id="Noe-Nv-kI9"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
+                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                    <state key="normal" title="Submit"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                            <real key="value" value="8"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                    <connections>
+                        <action selector="doSubmit:" destination="-1" eventType="touchUpInside" id="aw6-aV-4ke"/>
+                    </connections>
+                </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Touch a recognized value to delete the value and try again" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rog-v8-u05">
+                    <rect key="frame" x="20" y="543.66666666666663" width="353" height="36"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <view alpha="0.20000000000000001" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GaL-lP-aDN">
+                    <rect key="frame" x="30" y="348.66666666666669" width="333" height="180.00000000000006"/>
+                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="180" id="4Wo-sa-5DF"/>
+                    </constraints>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                            <real key="value" value="10"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </view>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Center your card until the fields are recognized" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0si-mv-946">
+                    <rect key="frame" x="30" y="315.66666666666669" width="333" height="18"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Credit Card Number" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2y7-B1-DoR">
+                    <rect key="frame" x="30" y="201.66666666666666" width="333" height="18"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="18" id="VQl-yl-7bi"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Cvv" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o6S-me-vVw">
+                    <rect key="frame" x="30" y="257.66666666666669" width="333" height="18"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="18" id="24A-Ls-YVn"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aWG-0f-OYt">
+                    <rect key="frame" x="30" y="89" width="30" height="30"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="30" id="SNv-kV-zdG"/>
+                        <constraint firstAttribute="width" constant="30" id="XAg-G0-7Sq"/>
+                    </constraints>
+                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                    <state key="normal" image="xmark" catalog="system"/>
+                    <connections>
+                        <action selector="doClose:" destination="-1" eventType="touchUpInside" id="fmL-SP-dk4"/>
+                    </connections>
+                </button>
+                <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qb2-4p-xui">
+                    <rect key="frame" x="30" y="229.66666666666666" width="333" height="18"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="18" id="lDU-dX-iJI"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="rog-v8-u05" firstAttribute="top" secondItem="GaL-lP-aDN" secondAttribute="bottom" constant="15" id="2Nm-G0-xzf"/>
+                <constraint firstItem="zyz-3l-WX3" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="30" id="2Yi-nt-2e3"/>
+                <constraint firstItem="2y7-B1-DoR" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="30" id="7sU-GT-cui"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="o6S-me-vVw" secondAttribute="trailing" constant="30" id="8Ia-f6-lge"/>
+                <constraint firstItem="aWG-0f-OYt" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="30" id="8rf-ad-lzO"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="2y7-B1-DoR" secondAttribute="trailing" constant="30" id="Evb-Ph-6DL"/>
+                <constraint firstItem="o6S-me-vVw" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="30" id="FeF-VY-jMC"/>
+                <constraint firstItem="rog-v8-u05" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="20" id="H48-v0-zMc"/>
+                <constraint firstItem="0si-mv-946" firstAttribute="top" secondItem="o6S-me-vVw" secondAttribute="bottom" constant="40" id="Hsk-3G-PAb"/>
+                <constraint firstItem="Qb2-4p-xui" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="30" id="Jwq-h1-UyJ"/>
+                <constraint firstItem="GaL-lP-aDN" firstAttribute="centerY" secondItem="vUN-kp-3ea" secondAttribute="centerY" id="MbL-as-dTd"/>
+                <constraint firstItem="GaL-lP-aDN" firstAttribute="centerX" secondItem="vUN-kp-3ea" secondAttribute="centerX" id="Og2-ib-lDs"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="zyz-3l-WX3" secondAttribute="trailing" constant="30" id="PRR-11-RKA"/>
+                <constraint firstItem="Qb2-4p-xui" firstAttribute="top" secondItem="2y7-B1-DoR" secondAttribute="bottom" constant="10" id="YZh-FJ-YKc"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="GaL-lP-aDN" secondAttribute="trailing" constant="30" id="cbe-97-9FE"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="zyz-3l-WX3" secondAttribute="bottom" constant="40" id="dm6-IA-YYu"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="rog-v8-u05" secondAttribute="trailing" constant="20" id="fLJ-4O-RB0"/>
+                <constraint firstItem="GaL-lP-aDN" firstAttribute="top" secondItem="0si-mv-946" secondAttribute="bottom" constant="15" id="gJF-eR-cff"/>
+                <constraint firstItem="0si-mv-946" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="30" id="h66-xj-x0j"/>
+                <constraint firstItem="aWG-0f-OYt" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="30" id="mVu-r8-4om"/>
+                <constraint firstAttribute="trailing" secondItem="0si-mv-946" secondAttribute="trailing" constant="30" id="o7R-8L-o7H"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="Qb2-4p-xui" secondAttribute="trailing" constant="30" id="w4Z-8p-P9b"/>
+                <constraint firstItem="o6S-me-vVw" firstAttribute="top" secondItem="Qb2-4p-xui" secondAttribute="bottom" constant="10" id="x2Q-uJ-5tz"/>
+                <constraint firstItem="GaL-lP-aDN" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="30" id="za8-kr-kI8"/>
+            </constraints>
+            <point key="canvasLocation" x="40.458015267175568" y="20.422535211267608"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="xmark" catalog="system" width="128" height="113"/>
+        <systemColor name="systemRedColor">
+            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>
