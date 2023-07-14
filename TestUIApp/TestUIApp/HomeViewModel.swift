@@ -15,11 +15,13 @@ struct HomeActionItem {
 
 enum HomeAction {
     case spinnerButton
+    case creditCardScanner
 }
 
 
 class HomeViewModel {
     let actions = [
-        HomeActionItem(image: "circle.hexagonpath.fill", title: "Spinner Button", action: .spinnerButton)
+        HomeActionItem(image: "circle.hexagonpath.fill", title: "Spinner Button", action: .spinnerButton),
+        HomeActionItem(image: "creditcard", title: "Credit Card Scanner", action: .creditCardScanner)
     ]
 }
