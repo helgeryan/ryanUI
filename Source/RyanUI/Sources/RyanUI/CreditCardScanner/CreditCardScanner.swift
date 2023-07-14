@@ -79,7 +79,9 @@ public class CreditCardScanner: UIViewController {
     override public func viewDidLoad() {
         super.viewDidLoad()
         setupCaptureSession()
-        captureSession.startRunning()
+        DispatchQueue.global(qos: .background).async {
+            self.captureSession.startRunning()
+        }
         title = viewTitle
 
         let buttomItem = UIBarButtonItem(barButtonSystemItem: .stop, target: self, action: #selector(scanCompleted))
@@ -288,7 +290,7 @@ public class CreditCardScanner: UIViewController {
         let stillImageRequestHandler = VNImageRequestHandler(ciImage: croppedImage, options: [:])
         try? stillImageRequestHandler.perform([request])
 
-        guard let texts = request.results as? [VNRecognizedTextObservation], texts.count > 0 else {
+        guard let texts = request.results, texts.count > 0 else {
             // no text detected
             return
         }
