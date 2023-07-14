@@ -10,10 +10,15 @@ import CoreImage
 import UIKit
 import Vision
 
+public protocol CreditCardScannerDelegate {
+    func didReceiveCreditCardInfo(_ creditCard: CreditCard)
+}
+
 @available(iOS 13.0, *)
 public class CreditCardScanner: UIViewController {
+    
     // MARK: - Private Properties
-
+    private var creditCard = CreditCard(number: nil, cvv: nil, date: nil)
     private let captureSession = AVCaptureSession()
     private lazy var previewLayer: AVCaptureVideoPreviewLayer = {
         let preview = AVCaptureVideoPreviewLayer(session: self.captureSession)
@@ -22,18 +27,11 @@ public class CreditCardScanner: UIViewController {
     }()
 
     private let device = AVCaptureDevice.default(for: .video)
-
     private var viewGuide: PartialTransparentView!
-
-    private var creditCardNumber: String?
-    private var creditCardName: String?
-    private var creditCardCVV: String?
-    private var creditCardDate: String?
-
     private let videoOutput = AVCaptureVideoDataOutput()
 
     // MARK: - Public Properties
-
+    var delegate: CreditCardScannerDelegate?
     @IBOutlet weak var submitButton: UIButton!
     @IBOutlet weak var hintBottomLabel: UILabel!
     @IBOutlet weak var hintTopLabel: UILabel!
@@ -41,27 +39,22 @@ public class CreditCardScanner: UIViewController {
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var cvvLabel: UILabel!
     @IBOutlet weak var closeButton: UIButton!
-
-    // MARK: - Instance dependencies
-
-    private var resultsHandler: (_ number: String?, _ date: String?, _ cvv: String?) -> Void?
-
+    
     // MARK: - Initializers
 
-    public init(resultsHandler: @escaping (_ number: String?, _ date: String?, _ cvv: String?) -> Void) {
-        self.resultsHandler = resultsHandler
+    public init(delegate: CreditCardScannerDelegate) {
+        self.delegate = delegate
         super.init(nibName: "CreditCardScanner", bundle: .module)
     }
 
-    public class func getScanner(resultsHandler: @escaping (_ number: String?, _ date: String?, _ cvv: String?) -> Void) -> UINavigationController {
-        let viewScanner = CreditCardScanner(resultsHandler: resultsHandler)
+    public class func getScanner(delegate: CreditCardScannerDelegate) -> UINavigationController {
+        let viewScanner = CreditCardScanner(delegate: delegate)
         let navigation = UINavigationController(rootViewController: viewScanner)
         return navigation
     }
 
     required init?(coder: NSCoder) {
-        resultsHandler = { _, _, _ in }
-        super.init(nibName: "CreditCardScanner", bundle: Bundle.module)
+        super.init(nibName: "CreditCardScanner", bundle: .module)
     }
     
     deinit {
@@ -80,17 +73,8 @@ public class CreditCardScanner: UIViewController {
         super.viewDidLayoutSubviews()
         previewLayer.frame = view.bounds
     }
-
-    // MARK: - Add Views
-
-    @IBAction func doClose(_ sender: Any) {
-        self.dismiss(animated: true)
-    }
-    @IBAction func doSubmit(_ sender: Any) {
-        resultsHandler(creditCardNumber, creditCardDate, creditCardCVV)
-        stop()
-        dismiss(animated: true, completion: nil)
-    }
+    
+    // MARK: - Setup
     private func setupCaptureSession() {
         addCameraInput()
         addPreviewLayer()
@@ -125,20 +109,30 @@ public class CreditCardScanner: UIViewController {
         dateLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(clearCardDate)))
     }
 
-    // MARK: - Clear on touch
+    // MARK: - Actions
+    @IBAction func doClose(_ sender: Any) {
+        self.dismiss(animated: true)
+    }
+    
+    @IBAction func doSubmit(_ sender: Any) {
+        delegate?.didReceiveCreditCardInfo(creditCard)
+        stop()
+        dismiss(animated: true, completion: nil)
+    }
+
     @objc func clearCardNumber() {
         creditCardNumberLabel?.text = ""
-        creditCardNumber = nil
+        creditCard.number = nil
     }
 
     @objc func clearCardDate() {
         dateLabel?.text = ""
-        creditCardDate = nil
+        creditCard.date = nil
     }
 
     @objc func clearCardCVV() {
         cvvLabel?.text = ""
-        creditCardCVV = nil
+        creditCard.cvv = nil
     }
 
     // MARK: - Completed process
@@ -196,52 +190,75 @@ public class CreditCardScanner: UIViewController {
 
             let trimmed = line.replacingOccurrences(of: " ", with: "")
 
-            if creditCardNumber == nil &&
-                trimmed.count >= 15 &&
-                trimmed.count <= 16 &&
-                trimmed.isOnlyNumbers {
-                creditCardNumber = line
-                DispatchQueue.main.async {
-                    self.creditCardNumberLabel?.text = line
-                    self.tapticFeedback()
-                }
+            if parseCreditCardNumber(trimmed: trimmed, line: line) {
                 continue
-            }
-
-            if creditCardCVV == nil &&
-                trimmed.count == 3 &&
-                trimmed.isOnlyNumbers {
-                creditCardCVV = line
-                DispatchQueue.main.async {
-                    self.cvvLabel?.text = line
-                    self.tapticFeedback()
-                }
+            } else if parseCreditCardCvv(trimmed: trimmed, line: line) {
                 continue
-            }
-
-            if creditCardDate == nil &&
-                trimmed.count >= 5 && // 12/20
-                trimmed.count <= 7 && // 12/2020
-                trimmed.isDate {
-                
-                creditCardDate = line
-                DispatchQueue.main.async {
-                    self.dateLabel?.text = line
-                    self.tapticFeedback()
-                }
-                continue
-            }
-
-            // Not used yet
-            if creditCardName == nil &&
-                trimmed.count > 10 &&
-                line.contains(" ") &&
-                trimmed.isOnlyAlpha {
-                
-                creditCardName = line
-                continue
+            } else if parseCreditCardDate(trimmed: trimmed, line: line) {
+               continue
+            } else {
+                let _ = parseCreditCardName(trimmed: trimmed, line: line)
             }
         }
+    }
+    
+    func parseCreditCardNumber(trimmed: String, line: String) -> Bool {
+        if creditCard.number == nil &&
+            trimmed.count >= 15 &&
+            trimmed.count <= 16 &&
+            trimmed.isOnlyNumbers {
+            creditCard.number = line
+            DispatchQueue.main.async {
+                self.creditCardNumberLabel?.text = line
+                self.tapticFeedback()
+            }
+            return true
+        }
+        return false
+    }
+    
+    
+    func parseCreditCardCvv(trimmed: String, line: String) -> Bool {
+        if creditCard.cvv == nil &&
+            trimmed.count == 3 &&
+            trimmed.isOnlyNumbers {
+            creditCard.cvv = line
+            DispatchQueue.main.async {
+                self.cvvLabel?.text = line
+                self.tapticFeedback()
+            }
+            return true
+        }
+        return false
+    }
+    
+    func parseCreditCardDate(trimmed: String, line: String) -> Bool {
+        if creditCard.date == nil &&
+            trimmed.count >= 5 && // 12/20
+            trimmed.count <= 7 && // 12/2020
+            trimmed.isDate {
+            
+            creditCard.date = line
+            DispatchQueue.main.async {
+                self.dateLabel?.text = line
+                self.tapticFeedback()
+            }
+            return true
+        }
+        return false
+    }
+    
+    func parseCreditCardName(trimmed: String, line: String) -> Bool {
+        // Not used yet
+        if creditCard.name == nil &&
+            trimmed.count > 10 &&
+            line.contains(" ") &&
+            trimmed.isOnlyAlpha {
+            
+            creditCard.name = line
+            return true
+        }
+        return false
     }
 
     private func tapticFeedback() {

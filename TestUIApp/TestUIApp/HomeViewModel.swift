@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import RyanUI
 
 struct HomeActionItem {
     let image: String
@@ -24,4 +25,11 @@ class HomeViewModel {
         HomeActionItem(image: "circle.hexagonpath.fill", title: "Spinner Button", action: .spinnerButton),
         HomeActionItem(image: "creditcard", title: "Credit Card Scanner", action: .creditCardScanner)
     ]
+}
+
+
+extension HomeViewModel: CreditCardScannerDelegate {
+    func didReceiveCreditCardInfo(_ creditCard: CreditCard) {
+        debugPrint(creditCard)
+    }
 }
