@@ -8,8 +8,8 @@
 import Foundation
 
 public struct CreditCard {
-    var number: String?
-    var cvv: String?
-    var date: String?
-    var name: String?
+    public var number: String?
+    public var cvv: String?
+    public var date: String?
+    public var name: String?
 }

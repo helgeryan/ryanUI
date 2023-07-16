@@ -12,9 +12,9 @@ import Vision
 
 public protocol CreditCardScannerDelegate {
     func didReceiveCreditCardInfo(_ creditCard: CreditCard)
+    func showScanner(_ scanner: CreditCardScanner)
 }
 
-@available(iOS 13.0, *)
 public class CreditCardScanner: UIViewController {
     
     // MARK: - Private Properties
@@ -171,33 +171,34 @@ public class CreditCardScanner: UIViewController {
 
         let croppedImage = outputImage!.cropped(to: CGRect(x: viewX, y: viewY, width: widht, height: height))
 
-        let request = VNRecognizeTextRequest()
-        request.recognitionLevel = .accurate
-        request.usesLanguageCorrection = false
+        if #available(iOS 13.0, *) {
+            let request = VNRecognizeTextRequest()
+            request.recognitionLevel = .accurate
+            request.usesLanguageCorrection = false
+            let stillImageRequestHandler = VNImageRequestHandler(ciImage: croppedImage, options: [:])
+            try? stillImageRequestHandler.perform([request])
+            
+            guard let texts = request.results, texts.count > 0 else {
+                // no text detected
+                return
+            }
+            
+            let arrayLines = texts.flatMap({ $0.topCandidates(20).map({ $0.string }) })
+            
+            for line in arrayLines {
+                print("Trying to parse: \(line)")
 
-        let stillImageRequestHandler = VNImageRequestHandler(ciImage: croppedImage, options: [:])
-        try? stillImageRequestHandler.perform([request])
+                let trimmed = line.replacingOccurrences(of: " ", with: "")
 
-        guard let texts = request.results, texts.count > 0 else {
-            // no text detected
-            return
-        }
-
-        let arrayLines = texts.flatMap({ $0.topCandidates(20).map({ $0.string }) })
-
-        for line in arrayLines {
-            print("Trying to parse: \(line)")
-
-            let trimmed = line.replacingOccurrences(of: " ", with: "")
-
-            if parseCreditCardNumber(trimmed: trimmed, line: line) {
-                continue
-            } else if parseCreditCardCvv(trimmed: trimmed, line: line) {
-                continue
-            } else if parseCreditCardDate(trimmed: trimmed, line: line) {
-               continue
-            } else {
-                let _ = parseCreditCardName(trimmed: trimmed, line: line)
+                if parseCreditCardNumber(trimmed: trimmed, line: line) {
+                    continue
+                } else if parseCreditCardCvv(trimmed: trimmed, line: line) {
+                    continue
+                } else if parseCreditCardDate(trimmed: trimmed, line: line) {
+                   continue
+                } else {
+                    let _ = parseCreditCardName(trimmed: trimmed, line: line)
+                }
             }
         }
     }

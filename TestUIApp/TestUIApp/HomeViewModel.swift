@@ -26,10 +26,3 @@ class HomeViewModel {
         HomeActionItem(image: "creditcard", title: "Credit Card Scanner", action: .creditCardScanner)
     ]
 }
-
-
-extension HomeViewModel: CreditCardScannerDelegate {
-    func didReceiveCreditCardInfo(_ creditCard: CreditCard) {
-        debugPrint(creditCard)
-    }
-}

@@ -36,7 +36,7 @@ extension ViewController: UITableViewDelegate {
                 present(vc, animated: true)
                 break
             case .creditCardScanner:
-                let vc = CreditCardScanner(delegate: model)
+                let vc = CreditCardViewController()
                 present(vc, animated: true)
             }
         }
